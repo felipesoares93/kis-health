@@ -1,0 +1,50 @@
+
+<div *ngIf="address">
+    <h2><span jhiTranslate="kishealthApp.address.detail.title">Address</span> {{address.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="kishealthApp.address.addressLine">Address Line</span></dt>
+        <dd>
+            <span>{{address.addressLine}}</span>
+        </dd>
+        <dt><span jhiTranslate="kishealthApp.address.addressLine2">Address Line 2</span></dt>
+        <dd>
+            <span>{{address.addressLine2}}</span>
+        </dd>
+        <dt><span jhiTranslate="kishealthApp.address.neighborhood">Neighborhood</span></dt>
+        <dd>
+            <span>{{address.neighborhood}}</span>
+        </dd>
+        <dt><span jhiTranslate="kishealthApp.address.city">City</span></dt>
+        <dd>
+            <span>{{address.city}}</span>
+        </dd>
+        <dt><span jhiTranslate="kishealthApp.address.state">State</span></dt>
+        <dd>
+            <span>{{address.state}}</span>
+        </dd>
+        <dt><span jhiTranslate="kishealthApp.address.country">Country</span></dt>
+        <dd>
+            <span>{{address.country}}</span>
+        </dd>
+        <dt><span jhiTranslate="kishealthApp.address.zipCode">Zip Code</span></dt>
+        <dd>
+            <span>{{address.zipCode}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'address/'+ address.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
