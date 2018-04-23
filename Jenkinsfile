@@ -1,50 +1,33 @@
-#!/usr/bin/env groovy
-
 node {
+
+    stage('check tools') {
+        sh "node -v"
+        sh "npm -v"
+        sh "bower -v"
+        sh "gulp -v"
+    }
+
     stage('checkout') {
         checkout scm
     }
 
-    stage('check java') {
-        sh "java -version"
+    stage('npm install') {
+        sh "npm install"
     }
 
     stage('clean') {
-        sh "chmod +x mvnw"
         sh "./mvnw clean"
     }
 
-    stage('install tools') {
-        sh "./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.9.4 -DyarnVersion=v1.3.2"
-    }
-
-    stage('yarn install') {
-        sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn"
-    }
-
     stage('backend tests') {
-        try {
-            sh "./mvnw test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
+        sh "./mvnw test"
     }
 
     stage('frontend tests') {
-        try {
-            sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn -Dfrontend.yarn.arguments=test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/karma/TESTS-*.xml'
-        }
+        sh "gulp test"
     }
 
     stage('packaging') {
-        sh "./mvnw verify -Pprod -DskipTests"
-        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+        sh "./mvnw package -Pprod -DskipTests"
     }
-
 }
