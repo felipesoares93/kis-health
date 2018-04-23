@@ -1,14 +1,16 @@
+#!/usr/bin/env groovy
+
 node {
+
+    stage('checkout') {
+        checkout scm
+    }
 
     stage('check tools') {
         sh "node -v"
         sh "npm -v"
-        sh "bower -v"
         sh "gulp -v"
-    }
-
-    stage('checkout') {
-        checkout scm
+        sh "java -version"
     }
 
     stage('npm install') {
@@ -16,6 +18,7 @@ node {
     }
 
     stage('clean') {
+        sh "chmod +x mvnw"
         sh "./mvnw clean"
     }
 
@@ -29,5 +32,7 @@ node {
 
     stage('packaging') {
         sh "./mvnw package -Pprod -DskipTests"
+        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
 }
+
