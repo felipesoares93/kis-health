@@ -9,7 +9,6 @@ node {
     stage('check tools') {
         sh "node -v"
         sh "npm -v"
-//        sh "gulp -v"
         sh "java -version"
     }
 
@@ -18,12 +17,14 @@ node {
     }
 
     stage('clean') {
-        sh "chmod +x mvnw"
-        sh "./mvnw clean"
+//        sh "chmod +x mvnw"
+//        sh "./mvnw clean"
+        sh "mvn clean"
     }
 
     stage('backend tests') {
-        sh "./mvnw test"
+//        sh "./mvnw test"
+        sh "mvn test"
     }
 
 //    stage('frontend tests') {
@@ -31,7 +32,8 @@ node {
 //    }
 
     stage('packaging') {
-        sh "./mvnw package -Pprod -DskipTests"
+//        sh "./mvnw package -Pprod -DskipTests"
+        sh "mvn package -Pprod -DskipTests"
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
 }
