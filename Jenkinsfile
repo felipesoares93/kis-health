@@ -22,10 +22,10 @@ node {
         sh "mvn clean"
     }
 
-    stage('backend tests') {
+//    stage('backend tests') {
 //        sh "./mvnw test"
-        sh "mvn test"
-    }
+//        sh "mvn test"
+//    }
 
 //    stage('frontend tests') {
 //        sh "gulp test"
