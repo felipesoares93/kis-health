@@ -33,7 +33,7 @@ node {
 
     stage('packaging') {
 //        sh "./mvnw package -Pprod -DskipTests"
-        sh "mvn package -Pprod -DskipTests"
+        sh "mvn package -Pdev -DskipTests"
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
 }
